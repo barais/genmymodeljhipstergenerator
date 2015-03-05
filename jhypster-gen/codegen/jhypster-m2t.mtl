@@ -9,7 +9,7 @@
  *
  *******************************************************************************
 [/comment]
-[module jhpster-m2t('http://www.eclipse.org/uml2/4.0.0/UML')/]
+[module jhypster-m2t('http://www.eclipse.org/uml2/4.0.0/UML')/]
 
 [template public generate(m : Model)]
 [m.packagedElement.generate()/]
