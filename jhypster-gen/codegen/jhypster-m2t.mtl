@@ -13,7 +13,8 @@
 
 
 [template public generate(c : Class)]
-[file ('/jhipster/' + c.name + '.json', false, 'UTF-8')]
+[comment @main/]
+[file (c.name.concat('.json'), false, 'UTF-8')]
 {
     "relationships": ['['/]
     [c.getAssociations().navigableOwnedEnd->select(type <> c).generateRef()/]
