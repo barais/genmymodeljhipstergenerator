@@ -11,20 +11,9 @@
 [/comment]
 [module jhypster-m2t('http://www.eclipse.org/uml2/4.0.0/UML')/]
 
-[template public generate(m : Model)]
-[m.packagedElement.generate()/]
-[/template]
-
-[template public generate(p : PackageableElement) /]
-[template public generate(p : Package) ? (not p.packagedElement->isEmpty())]
-[p.packagedElement->select(not oclIsKindOf(Package)).generate()/]
-[p.packagedElement->select(oclIsKindOf(Package)).generate()/]
-[/template]
-
 
 [template public generate(c : Class)]
-[comment @main/]
-[file ('/.jhipster/' + c.name + '.json', false, 'UTF-8')]
+[file ('/jhipster/' + c.name + '.json', false, 'UTF-8')]
 {
     "relationships": ['['/]
     [c.getAssociations().navigableOwnedEnd->select(type <> c).generateRef()/]
@@ -50,12 +39,12 @@
 [template public generate(a : Property)]
     {
             "relationshipId": 1,
-            "relationshipName": "[a.getLabel().toLower()/]",
-            "relationshipNameCapitalized": "[comment a.getLabel().toUpperFirst()/]",
-            "relationshipFieldName": "[comment a.getLabel().toLower()/]",
-            "otherEntityName": "[a.getLabel().toLower()/]",
+            "relationshipName": "[a.name.toLower()/]",
+            "relationshipNameCapitalized": "[ a.name.toUpperFirst()/]",
+            "relationshipFieldName": "[ a.name.toLower()/]",
+            "otherEntityName": "[a.name.toLower()/]",
             "relationshipType": "one-to-one",
-            "otherEntityNameCapitalized": "[comment a.getLabel().toUpperFirst()/]",
+            "otherEntityNameCapitalized": "[a.name.toUpperFirst()/]",
             "ownerSide": true
         }
 [/template]
@@ -63,10 +52,10 @@
 [template public generateRef(a : Property)]
 {
             "fieldId": 2,
-            "fieldName": "[a.getLabel().toLower()/]",
+            "fieldName": "[a.name.toLower()/]",
             "fieldType": "[a.getOpposite().datatype.name.toLower()/]",
-            "fieldNameCapitalized": "[comment a.getLabel().toUpperFirst()/]",
-            "fieldNameUnderscored": "[a.getLabel().toLower()/]"
+            "fieldNameCapitalized": "[comment a.name.toUpperFirst()/]",
+            "fieldNameUnderscored": "[a.name.toLower()/]"
 },
         
 [/template]
