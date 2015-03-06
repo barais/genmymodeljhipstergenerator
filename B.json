@@ -1,0 +1,44 @@
+{
+    "relationships": [
+        {
+                "relationshipId": 1,
+                "relationshipName": "a",
+                "relationshipNameCapitalized": "A",
+                "relationshipFieldName": "a",
+                "otherEntityName": "a",
+                "relationshipType": "one-to-one",
+                "otherEntityNameCapitalized": "A",
+                "ownerSide": true
+            }
+    
+    ],
+    "fields": [
+    {
+                "fieldId": 1,
+                "fieldName": "toto",
+                "fieldType": "string",
+                "fieldNameCapitalized": "Toto",
+                "fieldNameUnderscored": "toto"
+    }
+    ,    
+    
+    {
+                "fieldId": 2,
+                "fieldName": "ttii",
+                "fieldType": "string",
+                "fieldNameCapitalized": "Ttii",
+                "fieldNameUnderscored": "ttii"
+    }
+    
+
+    ],
+    "fieldsContainOwnerManyToMany": false,
+    "fieldsContainOneToMany": false,
+    "fieldsContainLocalDate": true,
+    "fieldsContainCustomTime": true,
+    "fieldsContainBigDecimal": false,
+    "fieldsContainDateTime": false,
+    "fieldsContainDate": false,
+    "changelogDate": "20150303155053",
+    "pagination": "pagination"
+}

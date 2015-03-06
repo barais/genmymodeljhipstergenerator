@@ -1,0 +1,35 @@
+{
+    "relationships": [
+        {
+                "relationshipId": 1,
+                "relationshipName": "b",
+                "relationshipNameCapitalized": "B",
+                "relationshipFieldName": "b",
+                "otherEntityName": "b",
+                "relationshipType": "one-to-one",
+                "otherEntityNameCapitalized": "B",
+                "ownerSide": true
+            }
+    
+    ],
+    "fields": [
+    {
+                "fieldId": 1,
+                "fieldName": "a",
+                "fieldType": "string",
+                "fieldNameCapitalized": "A",
+                "fieldNameUnderscored": "a"
+    }
+    
+
+    ],
+    "fieldsContainOwnerManyToMany": false,
+    "fieldsContainOneToMany": false,
+    "fieldsContainLocalDate": true,
+    "fieldsContainCustomTime": true,
+    "fieldsContainBigDecimal": false,
+    "fieldsContainDateTime": false,
+    "fieldsContainDate": false,
+    "changelogDate": "20150303155053",
+    "pagination": "pagination"
+}
