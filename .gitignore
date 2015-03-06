@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 ## Emacs Files ##
 *~
 
 ## Java ##
 *.class
+=======
+
+.tmp/
+>>>>>>> 646620d0c97027dcda506a91c9073a8606aa9456
