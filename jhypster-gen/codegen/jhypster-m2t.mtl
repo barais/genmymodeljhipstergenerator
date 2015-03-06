@@ -9,19 +9,36 @@
  *
  *******************************************************************************
 [/comment]
-[module jhypster-m2t('http://www.eclipse.org/uml2/4.0.0/UML')/]
+[module jhypster-mtl('http://www.eclipse.org/uml2/4.0.0/UML')/]
 
 
 [template public generate(c : Class)]
 [comment @main/]
 [file (c.name.concat('.json'), false, 'UTF-8')]
 {
+    [if (c.getAssociations()->size()>0)]
     "relationships": ['['/]
-    [c.getAssociations().navigableOwnedEnd->select(type <> c).generateRef()/]
+    [for (e : Property |c.getAssociations().navigableOwnedEnd->select(type <> c))]
+    [e.generateRef(c.getAssociations().navigableOwnedEnd->select(type <> c)->asSequence()->indexOf(e))/]
+    [if (c.getAssociations().navigableOwnedEnd->select(type <> c)->asSequence()->last()<>e)]
+    ,    
+    [/if]
+    
+    [/for]
     ['],'/]
+    [/if]
+    [if (c.attribute->size()>0)]
     "fields": ['['/]
-    [c.attribute.generate()/]
+    [for (e : Property |c.attribute)]
+    [e.generate(c.attribute->asSequence()->indexOf(e))/]
+    [if (c.attribute->asSequence()->last()<>e)]
+    ,    
+    [/if]
+    
+    [/for]
+
     ['],'/]
+    [/if]
     "fieldsContainOwnerManyToMany": false,
     "fieldsContainOneToMany": false,
     "fieldsContainLocalDate": true,
@@ -37,9 +54,9 @@
 
 
 
-[template public generate(a : Property)]
+[template public generateRef(a : Property,id:Integer)]
     {
-            "relationshipId": 1,
+            "relationshipId": [id/],
             "relationshipName": "[a.name.toLower()/]",
             "relationshipNameCapitalized": "[ a.name.toUpperFirst()/]",
             "relationshipFieldName": "[ a.name.toLower()/]",
@@ -50,15 +67,27 @@
         }
 [/template]
  
-[template public generateRef(a : Property)]
+[template public generate(a : Property,id:Integer)]
 {
-            "fieldId": 2,
+            "fieldId": [id/],
             "fieldName": "[a.name.toLower()/]",
-            "fieldType": "[a.getOpposite().datatype.name.toLower()/]",
-            "fieldNameCapitalized": "[comment a.name.toUpperFirst()/]",
+            "fieldType": [toType(a.type.name).trim()/]
+            "fieldNameCapitalized": "[a.name.toUpperFirst()/]",
             "fieldNameUnderscored": "[a.name.toLower()/]"
-},
-        
+}
 [/template]
+
+[template public toType(s : String) ]
+[if (s.equalsIgnoreCase('Integer'))]	"int",
+	[elseif (s.equalsIgnoreCase('Boolean'))]	"bool",
+	[elseif (s.equalsIgnoreCase('ByteArray'))]	"byte",
+	[elseif (s.equalsIgnoreCase('Date'))]	"DateTime",
+	[elseif (s.equalsIgnoreCase('Real'))]	"double",
+	[elseif (s.equalsIgnoreCase('UnlimitedNatural'))]	"uint",
+	[elseif (s.equalsIgnoreCase('Long') or s.equalsIgnoreCase('String') or s.equalsIgnoreCase('Char'))]	"[s.toLower()/]",
+[else] "[s/]",	
+[/if]
+[/template]
+
 
 
