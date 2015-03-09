@@ -14,11 +14,12 @@
 [template public generate(c : Package)]
 [comment @main/]
 [file (c.name.concat('.sh').trim(), false, 'UTF-8')]
+#!/bin/bash
 mv jhipster .jhipster
 [for (e : NamedElement|c.getOwnedMembers())]
 [if (e.oclIsTypeOf(Class))]
-    yo jhipster:entity [e.name.toLower()/]
-    [/if]
+yo jhipster:entity [e.name.toLower()/]
+[/if]
 [/for]
 [/file]
 [/template]
