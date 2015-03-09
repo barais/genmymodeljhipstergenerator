@@ -2,20 +2,6 @@
     "relationships": [
                 {
                         "relationshipId": 1,
-                        "relationshipName": "c",
-                        "relationshipNameCapitalized": "C",
-                        "relationshipFieldName": "c",
-                        "otherEntityName": "c",
-                        "relationshipType": "onetomany",
-                        "otherEntityNameCapitalized": "C",
-                            "ownerSide": false
-                        
-                        
-            
-                    }
-        ,    
-                {
-                        "relationshipId": 2,
                         "relationshipName": "b",
                         "relationshipNameCapitalized": "B",
                         "relationshipFieldName": "b",
@@ -26,6 +12,20 @@
                         
                         , 
                         "otherEntityField": "id"
+                        
+            
+                    }
+        ,    
+                {
+                        "relationshipId": 2,
+                        "relationshipName": "c",
+                        "relationshipNameCapitalized": "C",
+                        "relationshipFieldName": "c",
+                        "otherEntityName": "c",
+                        "relationshipType": "onetomany",
+                        "otherEntityNameCapitalized": "C",
+                            "ownerSide": false
+                        
                         
             
                     }
