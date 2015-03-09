@@ -30,36 +30,29 @@ yo jhipster:entity [e.name.toLower()/]
 [file ('/jhipster/'.concat(c.name).concat('.json'), false, 'UTF-8')]
 {
     [if (c.getAssociations()->size()>0)]
-    "relationships": ['['/]
     [comment TODO reflexie relation/]
-    [for (e : Property |c.getAssociations().navigableOwnedEnd->select(type <> c))]
-        [if ((e.opposite.upper < 2 and e.opposite.upper <>-1) and  (e.upper < 2 and e.upper <>-1) and e.isNavigable())]
-            [e.generateRef(c.getAssociations().navigableOwnedEnd->select(type <> c)->asSequence()->indexOf(e) ,'onetoone')/]
+        [let navigableProperties : Sequence(Property) = c.getAssociations().navigableOwnedEnd->select(type <> c and opposite <> null)->asSequence()]
+    [for (e : Property | navigableProperties) before('"relationships": [\n') separator ('\t,\n') after('\t],\n')]
+       [if ((e.opposite.upper < 2 and e.opposite.upper <>-1) and  (e.upper < 2 and e.upper <>-1) and e.isNavigable())]
+            [e.generateRef(navigableProperties->indexOf(e) ,'onetoone')/]
         [/if]
         [if ((e.opposite.upper > 1 or e.opposite.upper = -1) and  (e.upper < 2 and  e.upper <>-1) and e.isNavigable())]
-            [e.generateRef(c.getAssociations().navigableOwnedEnd->select(type <> c)->asSequence()->indexOf(e) ,'manytoone')/]
+            [e.generateRef(navigableProperties->indexOf(e) ,'manytoone')/]
         [/if]
         [if ((e.opposite.upper <2 and  e.opposite.upper <>-1) and ( e.upper > 1 or e.upper = -1) and e.isNavigable())]
-            [e.generateRef(c.getAssociations().navigableOwnedEnd->select(type <> c)->asSequence()->indexOf(e) ,'onetomany')/]
+            [e.generateRef(navigableProperties->indexOf(e) ,'onetomany')/]
         [/if]
         [if ((e.opposite.upper > 1 or e.opposite.upper = -1) and  (e.upper > 1 or e.upper = -1) and e.isNavigable())]
-            [e.generateRef(c.getAssociations().navigableOwnedEnd->select(type <> c)->asSequence()->indexOf(e) ,'manytomany')/]
-        [/if]
-        [if (c.getAssociations().navigableOwnedEnd->select(type <> c)->asSequence()->last()<>e)]
-        ,    
+            [e.generateRef(navigableProperties->indexOf(e) ,'manytomany')/]
         [/if]
     [/for]
-    ['],'/]
+     [/let]
     [/if]
     "fields": ['['/]
-    [for (e : Property |c.attribute)]
+     [for (e : Property |c.attribute) separator('\t,\n')]
     [e.generate(c.attribute->asSequence()->indexOf(e))/]
-    [if (c.attribute->asSequence()->last()<>e)]
-    ,    
-    [/if]
-    
     [/for]
-
+    
     ['],'/]
     "fieldsContainOwnerManyToMany": true,
     "fieldsContainOneToMany": true,
@@ -86,33 +79,30 @@ yo jhipster:entity [e.name.toLower()/]
             "relationshipType": "[qualifier/]",
             "otherEntityNameCapitalized": "[a.name.toUpperFirst()/]",
             [if  (qualifier = 'onetomany' and a.opposite <> null  and a.opposite.isNavigable())]
-                "ownerSide": false
+            "ownerSide": false
             [/if]
             [if( qualifier = 'onetomany' and (a.opposite = null  or not a.opposite.isNavigable()))]
-                "ownerSide": true
+            "ownerSide": true
             [/if]
             [if  (qualifier = 'manytoone')]
-                "ownerSide": true
+            "ownerSide": true
             [/if]
             [if  ((qualifier = 'manytomany' or qualifier = 'onetoone' )and (a.opposite <> null and a.opposite.isNavigable() and a.isNavigable() and not a.isComposite()  and not a.opposite.isComposite()))]
-                "ownerSide": [a.opposite.name< a.name/]
+            "ownerSide": [a.opposite.name< a.name/]
             [/if]
             [if  ((qualifier = 'manytomany' or qualifier = 'onetoone' ) and (a.opposite = null ))]
-                "ownerSide": true
+            "ownerSide": true
             [/if]
             [if  ((qualifier = 'manytomany' or qualifier = 'onetoone' )and (a.opposite <> null and not a.opposite.isNavigable() ))]
-                "ownerSide": true
+            "ownerSide": true
             [/if]
             [if  ((qualifier = 'manytomany' or qualifier = 'onetoone' )and (a.opposite <> null and a.opposite.isNavigable() and a.isNavigable() and  (a.isComposite()  or a.opposite.isComposite())))]
-                    "ownerSide": [a.isComposite /]
+            "ownerSide": [a.isComposite /]
             [/if]
-            
             [if  (qualifier = 'manytoone' or qualifier = 'onetoone' )]
             , 
             "otherEntityField": "id"
             [/if]
-            
-
         }
 [/template]
  
