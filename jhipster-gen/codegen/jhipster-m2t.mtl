@@ -17,7 +17,7 @@
 #!/bin/bash
 mv jhipster .jhipster
 [for (e : NamedElement|c.getOwnedMembers())]
-[if (e.oclIsTypeOf(Class))]
+[if (e.oclIsTypeOf(Class) and e.name.toLower() <> 'user')]
 yo jhipster:entity [e.name.toLower()/]
 [/if]
 [/for]
@@ -27,25 +27,28 @@ yo jhipster:entity [e.name.toLower()/]
 
 [template public generate(c : Class)]
 [comment @main/]
+[if (c.name.toLower() <> 'user')]
 [file ('/jhipster/'.concat(c.name).concat('.json'), false, 'UTF-8')]
 {
     [if (c.getAssociations()->size()>0)]
     [comment TODO reflexie relation/]
+    "relationships": ['['/]
         [let navigableProperties : Sequence(Property) = c.getAssociations().navigableOwnedEnd->select(type <> c and opposite <> null)->asSequence()]
-    [for (e : Property | navigableProperties) before('"relationships": [\n') separator ('\t,\n') after('\t],\n')]
-       [if ((e.opposite.upper < 2 and e.opposite.upper <>-1) and  (e.upper < 2 and e.upper <>-1) and e.isNavigable())]
+ [for (e : Property | navigableProperties)  separator (',') ]
+        [if (e.isNavigable() and (e.opposite.upper < 2 and e.opposite.upper <>-1) and  (e.upper < 2 and e.upper <>-1))]
             [e.generateRef(navigableProperties->indexOf(e) ,'onetoone')/]
         [/if]
-        [if ((e.opposite.upper > 1 or e.opposite.upper = -1) and  (e.upper < 2 and  e.upper <>-1) and e.isNavigable())]
+        [if (e.isNavigable() and (e.opposite.upper > 1 or e.opposite.upper = -1) and  (e.upper < 2 and  e.upper <>-1) and e.isNavigable())]
             [e.generateRef(navigableProperties->indexOf(e) ,'manytoone')/]
         [/if]
-        [if ((e.opposite.upper <2 and  e.opposite.upper <>-1) and ( e.upper > 1 or e.upper = -1) and e.isNavigable())]
+        [if (e.isNavigable() and (e.opposite.upper <2 and  e.opposite.upper <>-1) and ( e.upper > 1 or e.upper = -1) and e.isNavigable())]
             [e.generateRef(navigableProperties->indexOf(e) ,'onetomany')/]
         [/if]
-        [if ((e.opposite.upper > 1 or e.opposite.upper = -1) and  (e.upper > 1 or e.upper = -1) and e.isNavigable())]
+        [if (e.isNavigable() and (e.opposite.upper > 1 or e.opposite.upper = -1) and  (e.upper > 1 or e.upper = -1) and e.isNavigable())]
             [e.generateRef(navigableProperties->indexOf(e) ,'manytomany')/]
         [/if]
     [/for]
+    ],
      [/let]
     [/if]
     "fields": ['['/]
@@ -65,6 +68,7 @@ yo jhipster:entity [e.name.toLower()/]
     "pagination": "pagination"
 }
 [/file]
+[/if]
 [/template]
 
 
