@@ -38,7 +38,6 @@
     [/for]
     ['],'/]
     [/if]
-    [if (c.attribute->size()>0)]
     "fields": ['['/]
     [for (e : Property |c.attribute)]
     [e.generate(c.attribute->asSequence()->indexOf(e))/]
@@ -49,7 +48,6 @@
     [/for]
 
     ['],'/]
-    [/if]
     "fieldsContainOwnerManyToMany": true,
     "fieldsContainOneToMany": true,
     "fieldsContainLocalDate": true,
@@ -115,7 +113,7 @@
 	[elseif (s.equalsIgnoreCase('Date'))]	"DateTime",
 	[elseif (s.equalsIgnoreCase('Real'))]	"double",
 	[elseif (s.equalsIgnoreCase('UnlimitedNatural'))]	"uint",
-	[elseif (s.equalsIgnoreCase('Long') or s.equalsIgnoreCase('String') or s.equalsIgnoreCase('Char'))]	"[s.toLower()/]",
+	[elseif (s.equalsIgnoreCase('Long') or s.equalsIgnoreCase('String') or s.equalsIgnoreCase('Char'))]	"[s/]",
 [else] "[s/]",	
 [/if]
 [/template]
