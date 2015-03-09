@@ -6,30 +6,10 @@
                         "relationshipNameCapitalized": "A",
                         "relationshipFieldName": "a",
                         "otherEntityName": "a",
-                        "relationshipType": "onetoone",
+                        "relationshipType": "manytoone",
                         "otherEntityNameCapitalized": "A",
-                            "ownerSide": false
+                            "ownerSide": true
                     }
-    ],
-    "fields": [
-    {
-                "fieldId": 1,
-                "fieldName": "toto",
-                "fieldType": "string",
-                "fieldNameCapitalized": "Toto",
-                "fieldNameUnderscored": "toto"
-    }
-    ,    
-    
-    {
-                "fieldId": 2,
-                "fieldName": "ttii",
-                "fieldType": "string",
-                "fieldNameCapitalized": "Ttii",
-                "fieldNameUnderscored": "ttii"
-    }
-    
-
     ],
     "fieldsContainOwnerManyToMany": true,
     "fieldsContainOneToMany": true,
