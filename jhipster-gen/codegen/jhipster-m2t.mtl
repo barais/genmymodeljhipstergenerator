@@ -93,6 +93,11 @@
             [if  ((qualifier = 'manytomany' or qualifier = 'onetoone' )and (a.opposite <> null and a.opposite.isNavigable() and a.isNavigable() and  (a.isComposite()  or a.opposite.isComposite())))]
                     "ownerSide": [a.isComposite /]
             [/if]
+
+	    [if  (qualifier = 'manytoone' or qualifier = 'onetoone' )]
+            , 
+            "otherEntityField": "id"
+            [/if]
         }
 [/template]
  
