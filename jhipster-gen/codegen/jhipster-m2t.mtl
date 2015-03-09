@@ -9,7 +9,7 @@
  *
  *******************************************************************************
 [/comment]
-[module jhipster-mtl('http://www.eclipse.org/uml2/4.0.0/UML')/]
+[module jhipster-m2t('http://www.eclipse.org/uml2/4.0.0/UML')/]
 
 
 [template public generate(c : Class)]
