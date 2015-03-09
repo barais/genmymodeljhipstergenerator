@@ -18,12 +18,23 @@
 {
     [if (c.getAssociations()->size()>0)]
     "relationships": ['['/]
+    [comment TODO reflexie relation/]
     [for (e : Property |c.getAssociations().navigableOwnedEnd->select(type <> c))]
-    [e.generateRef(c.getAssociations().navigableOwnedEnd->select(type <> c)->asSequence()->indexOf(e))/]
-    [if (c.getAssociations().navigableOwnedEnd->select(type <> c)->asSequence()->last()<>e)]
-    ,    
-    [/if]
-    
+        [if ((e.opposite.upper < 2 and e.opposite.upper <>-1) and  (e.upper < 2 and e.upper <>-1) and e.isNavigable())]
+            [e.generateRef(c.getAssociations().navigableOwnedEnd->select(type <> c)->asSequence()->indexOf(e) ,'onetoone')/]
+        [/if]
+        [if ((e.opposite.upper > 1 or e.opposite.upper = -1) and  (e.upper < 2 and  e.upper <>-1) and e.isNavigable())]
+            [e.generateRef(c.getAssociations().navigableOwnedEnd->select(type <> c)->asSequence()->indexOf(e) ,'manytoone')/]
+        [/if]
+        [if ((e.opposite.upper <2 and  e.opposite.upper <>-1) and ( e.upper > 1 or e.upper = -1) and e.isNavigable())]
+            [e.generateRef(c.getAssociations().navigableOwnedEnd->select(type <> c)->asSequence()->indexOf(e) ,'onetomany')/]
+        [/if]
+        [if ((e.opposite.upper > 1 or e.opposite.upper = -1) and  (e.upper > 1 or e.upper = -1) and e.isNavigable())]
+            [e.generateRef(c.getAssociations().navigableOwnedEnd->select(type <> c)->asSequence()->indexOf(e) ,'manytomany')/]
+        [/if]
+        [if (c.getAssociations().navigableOwnedEnd->select(type <> c)->asSequence()->last()<>e)]
+        ,    
+        [/if]
     [/for]
     ['],'/]
     [/if]
@@ -39,13 +50,13 @@
 
     ['],'/]
     [/if]
-    "fieldsContainOwnerManyToMany": false,
-    "fieldsContainOneToMany": false,
+    "fieldsContainOwnerManyToMany": true,
+    "fieldsContainOneToMany": true,
     "fieldsContainLocalDate": true,
     "fieldsContainCustomTime": true,
-    "fieldsContainBigDecimal": false,
-    "fieldsContainDateTime": false,
-    "fieldsContainDate": false,
+    "fieldsContainBigDecimal": true,
+    "fieldsContainDateTime": true,
+    "fieldsContainDate": true,
     "changelogDate": "20150303155053",
     "pagination": "pagination"
 }
@@ -54,16 +65,36 @@
 
 
 
-[template public generateRef(a : Property,id:Integer)]
+[template public generateRef(a : Property,id:Integer,qualifier:String)]
     {
             "relationshipId": [id/],
             "relationshipName": "[a.name.toLower()/]",
             "relationshipNameCapitalized": "[ a.name.toUpperFirst()/]",
             "relationshipFieldName": "[ a.name.toLower()/]",
             "otherEntityName": "[a.name.toLower()/]",
-            "relationshipType": "one-to-one",
+            "relationshipType": "[qualifier/]",
             "otherEntityNameCapitalized": "[a.name.toUpperFirst()/]",
-            "ownerSide": true
+            [if  (qualifier = 'onetomany' and a.opposite <> null  and a.opposite.isNavigable())]
+                "ownerSide": false
+            [/if]
+            [if( qualifier = 'onetomany' and (a.opposite = null  or not a.opposite.isNavigable()))]
+                "ownerSide": true
+            [/if]
+            [if  (qualifier = 'manytoone')]
+                "ownerSide": true
+            [/if]
+            [if  ((qualifier = 'manytomany' or qualifier = 'onetoone' )and (a.opposite <> null and a.opposite.isNavigable() and a.isNavigable() and not a.isComposite()  and not a.opposite.isComposite()))]
+                "ownerSide": [a.opposite.name< a.name/]
+            [/if]
+            [if  ((qualifier = 'manytomany' or qualifier = 'onetoone' ) and (a.opposite = null ))]
+                "ownerSide": true
+            [/if]
+            [if  ((qualifier = 'manytomany' or qualifier = 'onetoone' )and (a.opposite <> null and not a.opposite.isNavigable() ))]
+                "ownerSide": true
+            [/if]
+            [if  ((qualifier = 'manytomany' or qualifier = 'onetoone' )and (a.opposite <> null and a.opposite.isNavigable() and a.isNavigable() and  (a.isComposite()  or a.opposite.isComposite())))]
+                    "ownerSide": [a.isComposite /]
+            [/if]
         }
 [/template]
  
