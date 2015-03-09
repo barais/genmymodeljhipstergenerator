@@ -14,6 +14,7 @@
 [template public generate(c : Package)]
 [comment @main/]
 [file (c.name.concat('.sh').trim(), false, 'UTF-8')]
+mv jhipster .jhipster
 [for (e : NamedElement|c.getOwnedMembers())]
 [if (e.oclIsTypeOf(Class))]
     yo jhipster:entity [e.name.toLower()/]
@@ -25,7 +26,7 @@
 
 [template public generate(c : Class)]
 [comment @main/]
-[file ('/.jhipster/'.concat(c.name).concat('.json'), false, 'UTF-8')]
+[file ('/jhipster/'.concat(c.name).concat('.json'), false, 'UTF-8')]
 {
     [if (c.getAssociations()->size()>0)]
     "relationships": ['['/]
