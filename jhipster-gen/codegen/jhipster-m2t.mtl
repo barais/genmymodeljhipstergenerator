@@ -11,10 +11,21 @@
 [/comment]
 [module jhipster-m2t('http://www.eclipse.org/uml2/4.0.0/UML')/]
 
+[template public generate(c : Package)]
+[comment @main/]
+[file (c.name.concat('.sh').trim(), false, 'UTF-8')]
+[for (e : NamedElement|c.getOwnedMembers())]
+[if (e.oclIsTypeOf(Class))]
+    yo jhipster:entity [e.name.toLower()/]
+    [/if]
+[/for]
+[/file]
+[/template]
+
 
 [template public generate(c : Class)]
 [comment @main/]
-[file (c.name.concat('.json'), false, 'UTF-8')]
+[file ('/.jhipster/'.concat(c.name).concat('.json'), false, 'UTF-8')]
 {
     [if (c.getAssociations()->size()>0)]
     "relationships": ['['/]
@@ -93,11 +104,13 @@
             [if  ((qualifier = 'manytomany' or qualifier = 'onetoone' )and (a.opposite <> null and a.opposite.isNavigable() and a.isNavigable() and  (a.isComposite()  or a.opposite.isComposite())))]
                     "ownerSide": [a.isComposite /]
             [/if]
-
-	    [if  (qualifier = 'manytoone' or qualifier = 'onetoone' )]
+            
+            [if  (qualifier = 'manytoone' or qualifier = 'onetoone' )]
             , 
             "otherEntityField": "id"
             [/if]
+            
+
         }
 [/template]
  
