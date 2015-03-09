@@ -9,6 +9,9 @@
                         "relationshipType": "onetomany",
                         "otherEntityNameCapitalized": "C",
                             "ownerSide": false
+                        
+                        
+            
                     }
         ,    
                 {
@@ -20,13 +23,18 @@
                         "relationshipType": "onetoone",
                         "otherEntityNameCapitalized": "B",
                             "ownerSide": true
+                        
+                        , 
+                        "otherEntityField": "id"
+                        
+            
                     }
     ],
     "fields": [
     {
                 "fieldId": 1,
                 "fieldName": "a",
-                "fieldType": "string",
+                "fieldType": "String",
                 "fieldNameCapitalized": "A",
                 "fieldNameUnderscored": "a"
     }

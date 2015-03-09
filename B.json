@@ -9,13 +9,18 @@
                         "relationshipType": "onetoone",
                         "otherEntityNameCapitalized": "A",
                             "ownerSide": false
+                        
+                        , 
+                        "otherEntityField": "id"
+                        
+            
                     }
     ],
     "fields": [
     {
                 "fieldId": 1,
                 "fieldName": "toto",
-                "fieldType": "string",
+                "fieldType": "String",
                 "fieldNameCapitalized": "Toto",
                 "fieldNameUnderscored": "toto"
     }
@@ -24,7 +29,7 @@
     {
                 "fieldId": 2,
                 "fieldName": "ttii",
-                "fieldType": "string",
+                "fieldType": "String",
                 "fieldNameCapitalized": "Ttii",
                 "fieldNameUnderscored": "ttii"
     }

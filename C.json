@@ -9,7 +9,15 @@
                         "relationshipType": "manytoone",
                         "otherEntityNameCapitalized": "A",
                             "ownerSide": true
+                        
+                        , 
+                        "otherEntityField": "id"
+                        
+            
                     }
+    ],
+    "fields": [
+
     ],
     "fieldsContainOwnerManyToMany": true,
     "fieldsContainOneToMany": true,
