@@ -1,0 +1,31 @@
+{
+    "relationships": [
+                {
+                        "relationshipId": 1,
+                        "relationshipName": "a",
+                        "relationshipNameCapitalized": "A",
+                        "relationshipFieldName": "a",
+                        "otherEntityName": "a",
+                        "relationshipType": "manytoone",
+                        "otherEntityNameCapitalized": "A",
+                            "ownerSide": true
+                        
+                        , 
+                        "otherEntityField": "id"
+                        
+            
+                    }
+    ],
+    "fields": [
+
+    ],
+    "fieldsContainOwnerManyToMany": true,
+    "fieldsContainOneToMany": true,
+    "fieldsContainLocalDate": true,
+    "fieldsContainCustomTime": true,
+    "fieldsContainBigDecimal": true,
+    "fieldsContainDateTime": true,
+    "fieldsContainDate": true,
+    "changelogDate": "20150303155053",
+    "pagination": "pagination"
+}
