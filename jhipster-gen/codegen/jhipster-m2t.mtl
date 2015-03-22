@@ -79,9 +79,9 @@ yo jhipster:entity [e.name.toLower()/]
             "relationshipName": "[a.name.toLower()/]",
             "relationshipNameCapitalized": "[ a.name.toUpperFirst()/]",
             "relationshipFieldName": "[ a.name.toLower()/]",
-            "otherEntityName": "[a.name.toLower()/]",
+            "otherEntityName": "[a.type.name.toLower()/]",
             "relationshipType": "[qualifier/]",
-            "otherEntityNameCapitalized": "[a.name.toUpperFirst()/]",
+            "otherEntityNameCapitalized": "[a.type.name.toUpperFirst()/]",
             [if  (qualifier = 'one-to-many' and a.opposite <> null  and a.opposite.isNavigable())]
             "ownerSide": false
             [/if]
